@@ -1,0 +1,62 @@
+@model StudentProfileModel
+@{
+    ViewData["Title"] = "Student Profile";
+}
+
+<div class="form-card wide profile-page">
+    <h1>Student Profile</h1>
+
+    <form asp-action="Profile" method="post" enctype="multipart/form-data" id="studentProfileForm">
+        <input asp-for="UserId" type="hidden" />
+        <input asp-for="StudentId" type="hidden" />
+
+        <label>Full name</label><input asp-for="FullName" class="profile-field" disabled />
+        <label>Phone</label><input asp-for="Phone" class="profile-field" disabled />
+        <label>Address</label><input asp-for="Address" class="profile-field" disabled />
+        <label>University</label><input asp-for="University" class="profile-field" disabled />
+        <label>Education level</label><input asp-for="EducationLevel" class="profile-field" disabled />
+        <label>Skills</label><textarea asp-for="Skills" class="profile-field" disabled></textarea>
+        <label>Preferred job area</label><input asp-for="PreferredJobArea" class="profile-field" disabled />
+        <label>Birth date</label><input asp-for="BirthDate" type="date" class="profile-field" disabled />
+        <label>Gender</label><input asp-for="Gender" class="profile-field" disabled />
+        <label>CV</label><input type="file" name="cvFile" accept=".pdf,.doc,.docx" class="profile-field" disabled />
+        @if (!string.IsNullOrWhiteSpace(Model.CvFilePath))
+        {
+            <p><a href="@Model.CvFilePath">Current CV</a></p>
+        }
+
+        <div class="action-row">
+            <button class="btn outline" type="button" id="editProfileBtn">Edit Profile</button>
+            <button class="btn hidden" type="submit" id="saveProfileBtn">Save</button>
+        </div>
+    </form>
+</div>
+
+<div class="form-card wide credentials-card">
+    <h2>Credentials</h2>
+    <p class="muted">Current email: @Model.Email</p>
+
+    <button class="btn outline" type="button" id="changeCredentialsBtn">Change Credentials</button>
+
+    <form asp-action="ChangeCredentials" method="post" id="credentialsForm" class="hidden section-gap">
+        <input name="UserId" value="@Model.UserId" type="hidden" />
+        <label>Email address</label><input name="Email" value="@Model.Email" type="email" />
+        <label>New password</label><input name="NewPassword" type="password" placeholder="Leave blank to keep current password" />
+        <button class="btn" type="submit">Save</button>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        document.getElementById('editProfileBtn')?.addEventListener('click', function () {
+            document.querySelectorAll('.profile-field').forEach(function (field) { field.disabled = false; });
+            document.getElementById('saveProfileBtn')?.classList.remove('hidden');
+            this.classList.add('hidden');
+        });
+
+        document.getElementById('changeCredentialsBtn')?.addEventListener('click', function () {
+            document.getElementById('credentialsForm')?.classList.remove('hidden');
+            this.classList.add('hidden');
+        });
+    </script>
+}

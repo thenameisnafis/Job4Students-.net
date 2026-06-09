@@ -1,0 +1,21 @@
+@model AdminDashboardModel
+@{
+    ViewData["Title"] = "Admin Dashboard";
+    var name = User.Identity?.Name ?? "Administrator";
+}
+<section class="dashboard-page">
+    <h1 class="page-greeting">Hello @name</h1>
+    <h2 class="dashboard-title">Admin Dashboard</h2>
+    <div class="grid four stats dashboard-stats">
+        <div class="card"><span>@Model.TotalUsers</span><p>Total Users</p></div>
+        <div class="card"><span>@Model.TotalJobs</span><p>Total Jobs</p></div>
+        <div class="card"><span>@Model.TotalApplications</span><p>Total Applications</p></div>
+        <div class="card"><span>@Model.PendingApplications</span><p>Pending Applications</p></div>
+    </div>
+    <div class="dashboard-actions">
+        <a class="btn" asp-action="Users">Manage Users</a>
+        <a class="btn outline" asp-action="Jobs">Manage Jobs</a>
+        <a class="btn outline" asp-action="Applications">View Applications</a>
+        <a class="btn outline" asp-action="Profile">Profile</a>
+    </div>
+</section>

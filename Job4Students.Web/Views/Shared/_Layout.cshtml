@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Job4Students</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+<header class="topbar">
+    <a class="brand" asp-controller="Home" asp-action="Index">Job4Students</a>
+    <nav>
+        <a asp-controller="Jobs" asp-action="Index">Jobs</a>
+        @if (User.Identity != null && User.Identity.IsAuthenticated == true)
+        {
+            if (User.IsInRole("student"))
+            {
+                <a asp-controller="StudentDashboard" asp-action="Index">Student Dashboard</a>
+                <a asp-controller="StudentDashboard" asp-action="MyApplications">My Applications</a>
+                <a asp-controller="StudentDashboard" asp-action="Profile">Profile</a>
+            }
+            else if (User.IsInRole("employer"))
+            {
+                <a asp-controller="EmployerDashboard" asp-action="Index">Recruiter Dashboard</a>
+                <a asp-controller="Jobs" asp-action="Create">Post Job</a>
+                <a asp-controller="EmployerDashboard" asp-action="Applications">Applications</a>
+                <a asp-controller="EmployerDashboard" asp-action="Profile">Profile</a>
+            }
+            else if (User.IsInRole("admin"))
+            {
+                <a asp-controller="Admin" asp-action="Index">Admin</a>
+                <a asp-controller="Admin" asp-action="Profile">Profile</a>
+                <a asp-controller="Admin" asp-action="Users">Users</a>
+                <a asp-controller="Admin" asp-action="Jobs">Jobs</a>
+                <a asp-controller="Admin" asp-action="Applications">Applications</a>
+            }
+
+            <span class="muted">@User.Identity.Name</span>
+            <a asp-controller="Auth" asp-action="Logout">Logout</a>
+        }
+        else
+        {
+            <a asp-controller="Auth" asp-action="Login">Login</a>
+            <a class="btn" asp-controller="Auth" asp-action="Register">Register</a>
+        }
+    </nav>
+</header>
+<main class="container">
+    @if (TempData["Success"] is not null)
+    {
+        <div class="alert success">@TempData["Success"]</div>
+    }
+    @if (TempData["Error"] is not null)
+    {
+        <div class="alert error">@TempData["Error"]</div>
+    }
+    @RenderBody()
+</main>
+<footer class="footer">Job4Students- All Rights Reserved to FUN</footer>
+@RenderSection("Scripts", required: false)
+</body>
+</html>

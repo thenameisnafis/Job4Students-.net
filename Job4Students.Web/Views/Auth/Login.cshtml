@@ -1,0 +1,44 @@
+@model LoginModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="row pt-5">
+    <div class="col-3"></div>
+
+    <div class="col-6 border form-card login-card">
+        <h1>Login</h1>
+        <hr />
+
+        @if (ViewBag.Error is not null)
+        {
+            <div class="alert error">@ViewBag.Error</div>
+        }
+
+        <form asp-controller="Auth" asp-action="Login" method="post">
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label"></label>
+                <input asp-for="Email" type="email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Password" class="form-label"></label>
+                <input asp-for="Password" type="password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <button type="submit" class="btn btn-primary">Login</button>
+                <a asp-action="Register" class="btn outline">Register</a>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-3"></div>
+</div>
+
+@section Scripts
+{
+    @Html.Partial("_ValidationScriptsPartial")
+}

@@ -1,0 +1,33 @@
+@model EmployerDashboardModel
+@{
+    ViewData["Title"] = "Recruiter Dashboard";
+    var jobs = ViewBag.Jobs as IEnumerable<JobListItemModel> ?? Enumerable.Empty<JobListItemModel>();
+    var name = User.Identity?.Name ?? "Recruiter";
+}
+<section class="dashboard-page">
+    <h1 class="page-greeting">Hello @name</h1>
+    <h2 class="dashboard-title">Recruiter Dashboard</h2>
+    <div class="grid four stats dashboard-stats">
+        <div class="card"><span>@Model.TotalJobs</span><p>Total Jobs</p></div>
+        <div class="card"><span>@Model.OpenJobs</span><p>Open Jobs</p></div>
+        <div class="card"><span>@Model.TotalApplications</span><p>Total Applications</p></div>
+        <div class="card"><span>@Model.PendingApplications</span><p>Pending Requests</p></div>
+    </div>
+    <div class="dashboard-actions">
+        <a class="btn" asp-controller="Jobs" asp-action="Create">Post Job</a>
+        <a class="btn outline" asp-action="Applications">View Applications</a>
+    </div>
+
+    <h2 class="dashboard-subtitle">My Jobs</h2>
+    <div class="grid two">
+    @foreach (var job in jobs)
+    {
+        <div class="card">
+            <h3>@job.Title</h3>
+            <p>@job.CompanyName • @job.Status • Applications: @job.ApplicationCount</p>
+            <a class="btn outline" asp-controller="Jobs" asp-action="Details" asp-route-id="@job.Id">View</a>
+            <a class="btn outline" asp-controller="Jobs" asp-action="Edit" asp-route-id="@job.Id">Edit</a>
+        </div>
+    }
+    </div>
+</section>

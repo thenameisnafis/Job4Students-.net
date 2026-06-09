@@ -1,0 +1,20 @@
+@model JobDetailsModel
+@{
+    ViewData["Title"] = Model.Title;
+}
+<div class="card detail">
+    <h1>@Model.Title</h1>
+    <p><strong>@Model.CompanyName</strong> by @Model.RecruiterName (@Model.RecruiterEmail)</p>
+    <p>@Model.Location • @Model.JobType • @Model.Industry • Salary: @(Model.Salary?.ToString("0.##") ?? "Negotiable")</p>
+    <p>Deadline: @Model.ApplicationDeadline.ToString("yyyy-MM-dd") • Status: <span class="badge">@Model.Status</span></p>
+    @if (Model.ImagePaths.Any())
+    {
+        <div class="images">@foreach (var img in Model.ImagePaths) { <img src="@img" alt="job image" /> }</div>
+    }
+    <h3>Description</h3><p>@Model.Description</p>
+    <h3>Requirements</h3><p>@Model.Requirements</p>
+    @if (User.IsInRole("student") && Model.Status == "open")
+    {
+        <a class="btn" asp-controller="StudentDashboard" asp-action="Apply" asp-route-jobId="@Model.Id">Apply Now</a>
+    }
+</div>

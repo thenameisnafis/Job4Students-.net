@@ -1,0 +1,32 @@
+@model AdminProfileModel
+@{
+    ViewData["Title"] = "Admin Profile";
+}
+
+<div class="form-card wide profile-page">
+    <h1>Admin Profile</h1>
+
+    <label>Username</label><input value="@Model.Username" readonly />
+    <label>Current email</label><input value="@Model.Email" readonly />
+    <label>Current password</label><input value="@Model.PasswordDisplay" readonly />
+
+    <div class="action-row">
+        <button class="btn outline" type="button" id="changeCredentialsBtn">Change Credentials</button>
+    </div>
+
+    <form asp-action="ChangeCredentials" method="post" id="credentialsForm" class="hidden section-gap">
+        <input name="UserId" value="@Model.UserId" type="hidden" />
+        <label>Email address</label><input name="Email" value="@Model.Email" type="email" />
+        <label>New password</label><input name="NewPassword" type="password" placeholder="Leave blank to keep current password" />
+        <button class="btn" type="submit">Save</button>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        document.getElementById('changeCredentialsBtn')?.addEventListener('click', function () {
+            document.getElementById('credentialsForm')?.classList.remove('hidden');
+            this.classList.add('hidden');
+        });
+    </script>
+}

@@ -1,0 +1,16 @@
+@{
+    ViewData["Title"] = "Home";
+}
+<section class="hero">
+    <div>
+        <h1>Find student-friendly jobs and internships</h1>
+        <p>Job4Students connects students with recruiters for internships, part-time jobs, and full-time opportunities.</p>
+        <a class="btn" asp-controller="Jobs" asp-action="Index">Browse Jobs</a>
+        <a class="btn outline" asp-controller="Auth" asp-action="Register">Join Now</a>
+    </div>
+</section>
+<section class="grid three">
+    <div class="card"><h3>Students</h3><p>Register, complete your profile, apply with a CV, and track your applications.</p></div>
+    <div class="card"><h3>Recruiters</h3><p>Post jobs, upload images, manage listings, and approve or reject applications.</p></div>
+    <div class="card"><h3>Admins</h3><p>Manage users, jobs, applications, and account statuses from one dashboard.</p></div>
+</section>

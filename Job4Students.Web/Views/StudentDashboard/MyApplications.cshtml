@@ -1,0 +1,23 @@
+@model IEnumerable<ApplicationListItemModel>
+@{
+    ViewData["Title"] = "My Applications";
+}
+<h1>My Applications</h1>
+<div class="list">
+@foreach (var app in Model)
+{
+    <div class="card">
+        <h2>@app.JobTitle</h2>
+        <p>@app.CompanyName • @app.Location • @app.JobType</p>
+        <p>Applied: @app.ApplicationDate.ToString("yyyy-MM-dd") • Expected start: @(app.ExpectedStartDate?.ToString("yyyy-MM-dd") ?? "N/A")</p>
+        <p>Status: <span class="badge">@app.Status</span></p>
+        <p>@app.CoverLetter</p>
+        @if (app.Status == "pending" || app.Status == "approved")
+        {
+            <form asp-action="Withdraw" asp-route-id="@app.Id" method="post" onsubmit="return confirm('Withdraw this application?')">
+                <button class="danger" type="submit">Withdraw</button>
+            </form>
+        }
+    </div>
+}
+</div>

@@ -1,0 +1,16 @@
+@model ApplicationCreateModel
+@{
+    var job = ViewBag.Job as JobDetailsModel;
+    ViewData["Title"] = "Apply";
+}
+<div class="form-card wide">
+    <h1>Apply for @job?.Title</h1>
+    <form asp-action="Apply" method="post" enctype="multipart/form-data">
+        <div asp-validation-summary="All" class="alert error"></div>
+        <input asp-for="JobId" type="hidden" />
+        <label>Expected start date</label><input asp-for="ExpectedStartDate" type="date" />
+        <label>Cover letter</label><textarea asp-for="CoverLetter" required></textarea>
+        <label>Upload CV (PDF/DOC/DOCX, max 5MB)</label><input type="file" name="cvFile" accept=".pdf,.doc,.docx" required />
+        <button class="btn" type="submit">Submit Application</button>
+    </form>
+</div>

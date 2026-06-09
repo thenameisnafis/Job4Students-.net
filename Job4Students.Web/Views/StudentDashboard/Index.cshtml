@@ -1,0 +1,19 @@
+@model StudentDashboardModel
+@{
+    ViewData["Title"] = "Student Dashboard";
+    var name = User.Identity?.Name ?? "Student";
+}
+<section class="dashboard-page">
+    <h1 class="page-greeting">Hello @name</h1>
+    <h2 class="dashboard-title">Student Dashboard</h2>
+    <div class="grid four stats dashboard-stats">
+        <div class="card"><span>@Model.TotalApplications</span><p>Total Applications</p></div>
+        <div class="card"><span>@Model.PendingApplications</span><p>Pending</p></div>
+        <div class="card"><span>@Model.ApprovedApplications</span><p>Approved</p></div>
+        <div class="card"><span>@Model.ConfirmedApplications</span><p>Confirmed</p></div>
+    </div>
+    <div class="dashboard-actions">
+        <a class="btn" asp-controller="Jobs" asp-action="Index">Browse Jobs</a>
+        <a class="btn outline" asp-action="MyApplications">View My Applications</a>
+    </div>
+</section>

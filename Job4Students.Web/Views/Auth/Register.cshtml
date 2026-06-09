@@ -1,0 +1,123 @@
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<div class="register-page">
+    <div id="registerChoice" class="register-choice-wrap">
+        <h1>Create an account</h1>
+        <p class="muted register-intro">Choose the account type you want to create.</p>
+
+        <div class="grid two register-choice-grid">
+            <div class="card register-choice-card">
+                <h2>Sign up as Student</h2>
+                <p class="muted">Create a student account to browse jobs and apply for suitable opportunities.</p>
+                <button class="btn register-choice-btn" type="button" data-target="studentRegisterForm">Sign up as Student</button>
+            </div>
+            <div class="card register-choice-card">
+                <h2>Sign up as Recruiter</h2>
+                <p class="muted">Create a recruiter account to post jobs and manage student applications.</p>
+                <button class="btn register-choice-btn" type="button" data-target="recruiterRegisterForm">Sign up as Recruiter</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="studentRegisterForm" class="register-form-section hidden">
+        <div class="form-card register-form-card">
+            <div class="split-head">
+                <h2>Student Registration</h2>
+                <button class="btn outline register-back-btn" type="button">Change account type</button>
+            </div>
+            <form asp-controller="Auth" asp-action="RegisterStudent" method="post">
+                <div asp-validation-summary="All" class="alert error"></div>
+
+                <label asp-for="FullName"></label><input asp-for="FullName" />
+                <span asp-validation-for="FullName" class="text-danger"></span>
+
+                <label asp-for="Email"></label><input asp-for="Email" type="email" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+
+                <label asp-for="Password"></label><input asp-for="Password" type="password" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+
+                <label asp-for="Phone"></label><input asp-for="Phone" />
+                <label asp-for="Address"></label><input asp-for="Address" />
+                <label asp-for="University"></label><input asp-for="University" />
+                <label asp-for="EducationLevel"></label><input asp-for="EducationLevel" />
+                <label asp-for="Skills"></label><textarea asp-for="Skills"></textarea>
+                <label asp-for="PreferredJobArea"></label><input asp-for="PreferredJobArea" />
+
+                <div class="register-submit-row">
+                    <button class="btn" type="submit">Register as Student</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="recruiterRegisterForm" class="register-form-section hidden">
+        <div class="form-card register-form-card">
+            <div class="split-head">
+                <h2>Recruiter Registration</h2>
+                <button class="btn outline register-back-btn" type="button">Change account type</button>
+            </div>
+            <form asp-controller="Auth" asp-action="RegisterEmployer" method="post">
+                <div asp-validation-summary="All" class="alert error"></div>
+
+                <label asp-for="FullName"></label><input asp-for="FullName" />
+                <span asp-validation-for="FullName" class="text-danger"></span>
+
+                <label asp-for="CompanyName"></label><input asp-for="CompanyName" />
+
+                <label asp-for="Email"></label><input asp-for="Email" type="email" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+
+                <label asp-for="Password"></label><input asp-for="Password" type="password" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+
+                <label asp-for="Phone"></label><input asp-for="Phone" />
+                <label asp-for="Address"></label><input asp-for="Address" />
+                <label asp-for="CompanyFounded"></label><input asp-for="CompanyFounded" type="date" />
+
+                <div class="register-submit-row">
+                    <button class="btn" type="submit">Register as Recruiter</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        (() => {
+            const choicePanel = document.getElementById('registerChoice');
+            const formSections = document.querySelectorAll('.register-form-section');
+            const choiceButtons = document.querySelectorAll('.register-choice-btn');
+            const backButtons = document.querySelectorAll('.register-back-btn');
+
+            const showChoices = () => {
+                choicePanel.classList.remove('hidden');
+                formSections.forEach(section => section.classList.add('hidden'));
+            };
+
+            const showForm = (targetId) => {
+                choicePanel.classList.add('hidden');
+                formSections.forEach(section => section.classList.add('hidden'));
+                const selectedForm = document.getElementById(targetId);
+                if (selectedForm) {
+                    selectedForm.classList.remove('hidden');
+                    selectedForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            };
+
+            choiceButtons.forEach(button => {
+                button.addEventListener('click', () => showForm(button.dataset.target));
+            });
+
+            backButtons.forEach(button => {
+                button.addEventListener('click', showChoices);
+            });
+        })();
+    </script>
+
+    @Html.Partial("_ValidationScriptsPartial")
+}

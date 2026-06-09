@@ -1,0 +1,20 @@
+@model IEnumerable<ApplicationListItemModel>
+@{
+    ViewData["Title"] = "All Applications";
+}
+<h1>All Applications</h1>
+<table>
+<thead><tr><th>Job</th><th>Student</th><th>Recruiter</th><th>Status</th><th>Date</th></tr></thead>
+<tbody>
+@foreach (var app in Model)
+{
+    <tr>
+        <td>@app.JobTitle<br /><span class="muted">@app.CompanyName</span></td>
+        <td>@app.StudentName<br /><span class="muted">@app.StudentEmail</span></td>
+        <td>@app.EmployerName<br /><span class="muted">@app.EmployerEmail</span></td>
+        <td>@app.Status</td>
+        <td>@app.ApplicationDate.ToString("yyyy-MM-dd")</td>
+    </tr>
+}
+</tbody>
+</table>

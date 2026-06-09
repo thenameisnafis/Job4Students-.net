@@ -1,0 +1,46 @@
+@model IEnumerable<JobListItemModel>
+@{
+    ViewData["Title"] = "Jobs";
+    var filter = ViewBag.Filter as JobFilterModel ?? new JobFilterModel();
+}
+<div class="split-head">
+    <h1>Jobs</h1>
+    @if (User.IsInRole("employer"))
+    {
+        <a class="btn" asp-action="Create">Post New Job</a>
+    }
+</div>
+<form method="get" class="filter-bar">
+    <input name="Search" value="@filter.Search" placeholder="Search title, description, company" />
+    <select name="JobType">
+        <option value="">Any type</option>
+        <option value="internship" selected="@(filter.JobType == "internship")">Internship</option>
+        <option value="part-time" selected="@(filter.JobType == "part-time")">Part-time</option>
+        <option value="full-time" selected="@(filter.JobType == "full-time")">Full-time</option>
+    </select>
+    <input name="Industry" value="@filter.Industry" placeholder="Industry" />
+    <input name="Location" value="@filter.Location" placeholder="Location" />
+    <input name="MinSalary" value="@filter.MinSalary" placeholder="Min salary" />
+    <input name="MaxSalary" value="@filter.MaxSalary" placeholder="Max salary" />
+    <button class="btn" type="submit">Filter</button>
+</form>
+<div class="grid two">
+@foreach (var job in Model)
+{
+    <div class="card">
+        @if (!string.IsNullOrWhiteSpace(job.PrimaryImagePath)) { <img class="thumb" src="@job.PrimaryImagePath" alt="job image" /> }
+        <h2>@job.Title</h2>
+        <p><strong>@job.CompanyName</strong> • @job.Location</p>
+        <p>@job.JobType • @job.Industry • @(job.Salary?.ToString("0.##") ?? "Negotiable")</p>
+        <p>Status: <span class="badge">@job.Status</span> Applications: @job.ApplicationCount</p>
+        <a class="btn outline" asp-action="Details" asp-route-id="@job.Id">Details</a>
+        @if (User.IsInRole("employer"))
+        {
+            <a class="btn outline" asp-action="Edit" asp-route-id="@job.Id">Edit</a>
+            <form asp-action="Delete" asp-route-id="@job.Id" method="post" class="inline" onsubmit="return confirm('Delete this job?')">
+                <button class="danger" type="submit">Delete</button>
+            </form>
+        }
+    </div>
+}
+</div>

@@ -1,0 +1,9 @@
+<Solution>
+  <Project Path="Job4Students.Api/Job4Students.Api.csproj" />
+  <Project Path="Job4Students.Data/Job4Students.Data.csproj" />
+  <Project Path="Job4Students.Entities/Job4Students.Entities.csproj" />
+  <Project Path="Job4Students.Models/Job4Students.Models.csproj" />
+  <Project Path="Job4Students.Repos/Job4Students.Repos.csproj" />
+  <Project Path="Job4Students.Shared/Job4Students.Shared.csproj" />
+  <Project Path="Job4Students.Web/Job4Students.Web.csproj" />
+</Solution>

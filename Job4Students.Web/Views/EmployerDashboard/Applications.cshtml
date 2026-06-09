@@ -1,0 +1,30 @@
+@model IEnumerable<ApplicationListItemModel>
+@{
+    ViewData["Title"] = "Application Requests";
+}
+<h1>Application Requests</h1>
+<div class="list">
+@foreach (var app in Model)
+{
+    <div class="card">
+        <h2>@app.JobTitle</h2>
+        <p>Student: @app.StudentName (@app.StudentEmail)</p>
+        <p>Applied: @app.ApplicationDate.ToString("yyyy-MM-dd") • Status: <span class="badge">@app.Status</span></p>
+        <p>@app.CoverLetter</p>
+        @if (!string.IsNullOrWhiteSpace(app.CvFilePath)) { <p><a href="@app.CvFilePath">Download CV</a></p> }
+        @if (app.Status == "pending")
+        {
+            <form asp-action="UpdateApplicationStatus" method="post" class="inline">
+                <input type="hidden" name="id" value="@app.Id" />
+                <input type="hidden" name="status" value="approved" />
+                <button class="btn" type="submit">Approve</button>
+            </form>
+            <form asp-action="UpdateApplicationStatus" method="post" class="inline">
+                <input type="hidden" name="id" value="@app.Id" />
+                <input type="hidden" name="status" value="rejected" />
+                <button class="danger" type="submit">Reject</button>
+            </form>
+        }
+    </div>
+}
+</div>

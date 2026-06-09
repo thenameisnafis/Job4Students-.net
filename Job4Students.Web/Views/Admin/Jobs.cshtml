@@ -1,0 +1,27 @@
+@model IEnumerable<JobListItemModel>
+@{
+    ViewData["Title"] = "Manage Jobs";
+}
+<h1>Manage Jobs</h1>
+<table>
+<thead><tr><th>Title</th><th>Company</th><th>Type</th><th>Status</th><th>Applications</th><th>Action</th></tr></thead>
+<tbody>
+@foreach (var job in Model)
+{
+    <tr>
+        <td><a asp-controller="Jobs" asp-action="Details" asp-route-id="@job.Id">@job.Title</a></td>
+        <td>@job.CompanyName</td>
+        <td>@job.JobType</td>
+        <td>@job.Status</td>
+        <td>@job.ApplicationCount</td>
+        <td>
+            <form asp-action="UpdateJobStatus" method="post" class="inline">
+                <input type="hidden" name="id" value="@job.Id" />
+                <select name="status"><option value="open">Open</option><option value="closed">Closed</option></select>
+                <button class="btn small" type="submit">Update</button>
+            </form>
+        </td>
+    </tr>
+}
+</tbody>
+</table>

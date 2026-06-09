@@ -1,0 +1,54 @@
+@model EmployerProfileModel
+@{
+    ViewData["Title"] = "Recruiter Profile";
+}
+
+<div class="form-card wide profile-page">
+    <h1>Recruiter Profile</h1>
+
+    <form asp-action="Profile" method="post" id="recruiterProfileForm">
+        <input asp-for="UserId" type="hidden" />
+        <input asp-for="EmployerId" type="hidden" />
+
+        <label>Full name</label><input asp-for="FullName" class="profile-field" disabled />
+        <label>Company name</label><input asp-for="CompanyName" class="profile-field" disabled />
+        <label>Phone</label><input asp-for="Phone" class="profile-field" disabled />
+        <label>Address</label><input asp-for="Address" class="profile-field" disabled />
+        <label>Company founded</label><input asp-for="CompanyFounded" type="date" class="profile-field" disabled />
+        <label>Company description</label><textarea asp-for="CompanyDescription" class="profile-field" disabled></textarea>
+
+        <div class="action-row">
+            <button class="btn outline" type="button" id="editProfileBtn">Edit Profile</button>
+            <button class="btn hidden" type="submit" id="saveProfileBtn">Save</button>
+        </div>
+    </form>
+</div>
+
+<div class="form-card wide credentials-card">
+    <h2>Credentials</h2>
+    <p class="muted">Current email: @Model.Email</p>
+
+    <button class="btn outline" type="button" id="changeCredentialsBtn">Change Credentials</button>
+
+    <form asp-action="ChangeCredentials" method="post" id="credentialsForm" class="hidden section-gap">
+        <input name="UserId" value="@Model.UserId" type="hidden" />
+        <label>Email address</label><input name="Email" value="@Model.Email" type="email" />
+        <label>New password</label><input name="NewPassword" type="password" placeholder="Leave blank to keep current password" />
+        <button class="btn" type="submit">Save</button>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        document.getElementById('editProfileBtn')?.addEventListener('click', function () {
+            document.querySelectorAll('.profile-field').forEach(function (field) { field.disabled = false; });
+            document.getElementById('saveProfileBtn')?.classList.remove('hidden');
+            this.classList.add('hidden');
+        });
+
+        document.getElementById('changeCredentialsBtn')?.addEventListener('click', function () {
+            document.getElementById('credentialsForm')?.classList.remove('hidden');
+            this.classList.add('hidden');
+        });
+    </script>
+}

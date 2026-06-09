@@ -1,0 +1,20 @@
+@model JobCreateModel
+@{
+    ViewData["Title"] = "Post Job";
+}
+<div class="form-card wide">
+<h1>Post a Job</h1>
+<form asp-action="Create" method="post" enctype="multipart/form-data">
+    <label>Title</label><input asp-for="Title" required />
+    <label>Job type</label><select asp-for="JobType"><option value="internship">Internship</option><option value="part-time">Part-time</option><option value="full-time">Full-time</option></select>
+    <label>Description</label><textarea asp-for="Description" required></textarea>
+    <label>Company name</label><input asp-for="CompanyName" />
+    <label>Industry</label><input asp-for="Industry" />
+    <label>Location</label><input asp-for="Location" />
+    <label>Salary</label><input asp-for="Salary" />
+    <label>Requirements</label><textarea asp-for="Requirements"></textarea>
+    <label>Application deadline</label><input asp-for="ApplicationDeadline" type="date" required />
+    <label>Job images</label><input type="file" name="images" multiple accept=".jpg,.jpeg,.png,.gif" />
+    <button class="btn" type="submit">Create Job</button>
+</form>
+</div>
